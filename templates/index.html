@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piñatería Fiesta Mágica</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5f7;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #EDC0FF, #99558B);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.6rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        nav {
+            background-color: #fdbeff;
+            padding: 0.7rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        nav a {
+            color: #4a4a4a;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #EDC0FF;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .welcome {
+            text-align: center;
+            background-color: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .welcome h2 {
+            color: #ff6b6b;
+            margin-top: 0;
+        }
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+        .tarjeta {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 6px solid #fdbeff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .tarjeta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .tarjeta h3 {
+            color: #ff6b6b;
+            margin: 10px 0;
+            font-size: 1.4rem;
+        }
+        .tarjeta p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        .badge {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #333;
+            color: white;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Piñatería Sofia</h1>
+        <p>¡Todo lo que necesitas para que tu fiesta!</p>
+    </header>
+
+    <nav>
+        <a href="/">Inicio</a>
+        <a href="#productos">Productos</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>¡Bienvenidos a la central de la diversión!</h2>
+            <p>Explora nuestro catálogo lleno de color, dulces y las piñatas más espectaculares hechas a medida para tus personajes favoritos.</p>
+        </div>
+
+        <div id="productos" class="grid-productos">
+            <div class="tarjeta">
+                <span class="badge">¡Más Vendido!</span>
+                <h3>Piñatas Personalizadas</h3>
+                <p>Hechas a mano con el personaje, temática o forma que te imagines. ¡Tú lo sueñas, nosotros lo rompemos!</p>
+            </div>
+            <div class="tarjeta">
+                <span class="badge">Novedad</span>
+                <h3>Globos y Guirnaldas</h3>
+                <p>Arcos orgánicos, globos metálicos con helio y fondos listos para tus mejores fotos de Instagram.</p>
+            </div>
+            <div class="tarjeta">
+                <span class="badge">Combos</span>
+                <h3>Packs Cumpleañeros</h3>
+                <p>Ahorra tiempo y dinero. Incluye piñata, dulces surtidos, sorpresas y toda la vajilla temática desechable.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contacto">
+        <p>&copy; 2026 Piñatería Sofia - Armando los mejores momentos de Lima.</p>
+    </footer>
+
+</body>
+</html>
