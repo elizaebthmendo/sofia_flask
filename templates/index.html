@@ -13,11 +13,11 @@
     <!--Barra de busqueda-->
     <nav class="navbar" id="inicio">
         <div class="nav-izquierda">
-            <a href="index.html">Inicio</a>
-            <a href="productos.html">Productos</a>
-            <a href="clientes.html">Clientes</a>
-            <a href="faq.html">FAQ</a>
-            <a href="contacto.html">Contacto</a>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('productos') }}">Productos</a>
+            <a href="{{ url_for('contacto') }}">Contacto</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
         </div>
         <div class="nav-derecha">
             <div class="search-box">
@@ -86,17 +86,20 @@
             <div class="tarjeta">
                 <span class="badge">Para Los Invitados</span>
                 <h3>Bolsitas y Cajitas Regalo</h3>
-                <p>Sorpresas y bolsitas temáticas para que cada invitado se lleve un recuerdo especial del cumpleaños a casa.</p>
+                <p>Sorpresas y bolsitas temáticas para que cada invitado se lleve un recuerdo especial del cumpleaños a
+                    casa.</p>
             </div>
             <div class="tarjeta">
                 <span class="badge">¡Lo Mas Vendido!</span>
                 <h3>Rellenos para Piñata</h3>
-                <p>Olvídate de ir al mercado. Packs de dulces surtidos de las mejores marcas, juguetes pequeños y confeti listos para tu piñata.</p>
+                <p>Olvídate de ir al mercado. Packs de dulces surtidos de las mejores marcas, juguetes pequeños y
+                    confeti listos para tu piñata.</p>
             </div>
             <div class="tarjeta">
                 <span class="badge">Detalle unico</span>
                 <h3>Mini Piñatas</h3>
-                <p>Versiones pequeñas de tus personajes favoritos. Perfectas para centros de mesa, decoración o para regalar.</p>
+                <p>Versiones pequeñas de tus personajes favoritos. Perfectas para centros de mesa, decoración o para
+                    regalar.</p>
             </div>
         </div>
     </div>
