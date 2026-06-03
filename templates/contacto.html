@@ -12,11 +12,11 @@
 <body>
     <nav class="navbar" id="inicio">
         <div class="nav-izquierda">
-            <a href="index.html">Inicio</a>
-            <a href="productos.html">Productos</a>
-            <a href="clientes.html">Clientes</a>
-            <a href="faq.html">FAQ</a>
-            <a href="contacto.html">Contacto</a>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('productos') }}">Productos</a>
+            <a href="{{ url_for('contacto') }}">Contacto</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
         </div>
         <div class="nav-derecha">
             <div class="search-box">
