@@ -630,3 +630,123 @@ footer {
     line-height: 1.6;
     text-align: center;
 }
+
+/* ==========================================
+   NUEVOS ESTILOS PARA LAS TARJETAS DE PRODUCTO
+   ========================================== */
+
+/* Adaptamos tu clase .tarjeta para que soporte la estructura de catálogo */
+.tarjeta {
+    background-color: white;
+    border-radius: 12px;
+    padding: 0; /* Quitamos el padding global para que la imagen llegue a los bordes */
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-top: 6px solid #e999eb;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden; /* Asegura que la imagen respete las esquinas redondeadas */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor de la imagen del producto */
+.producto-img-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background-color: #fffbfd;
+}
+
+.producto-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta:hover .producto-img-container img {
+    transform: scale(1.05); /* Efecto sutil de zoom al pasar el mouse */
+}
+
+/* Cuerpo interno de la tarjeta (aquí devolvemos el padding) */
+.producto-cuerpo {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Empuja la sección de compra hacia abajo para alinear los botones */
+    justify-content: space-between;
+}
+
+/* Forzamos una altura constante para títulos y descripciones para que el grid sea simétrico */
+.tarjeta h3 {
+    color: #99558B; /* Cambiado a un tono más oscuro para mejorar la legibilidad */
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tarjeta p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin: 0 0 15px 0;
+    height: 58px; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Sistema de estrellas de calificación */
+.producto-estrellas {
+    color: #ffca28; /* Amarillo dorado para las estrellas */
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.producto-estrellas span {
+    color: #a0a0a0;
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
+
+/* Sección inferior: Precio y Botón de compra */
+.producto-compra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Alínea esta sección siempre al fondo */
+    padding-top: 10px;
+    border-top: 1px solid #fff0f5;
+}
+
+.producto-precio {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #c254d8; /* Usando tu color morado acento */
+}
+
+/* Botón Añadir al Carrito */
+.btn-carrito {
+    background-color: #2ed573; /* Verde alegre que resalta para la acción de compra */
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-carrito:hover {
+    background-color: #26af5f;
+    transform: scale(1.03);
+}
