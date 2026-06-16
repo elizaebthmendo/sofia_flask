@@ -5,7 +5,10 @@ import os
 
 app = Flask(__name__)
 
+# ==========================================
 # CONFIGURACIÓN DE SEGURIDAD Y BASE DE DATOS
+# ==========================================
+
 # Clave secreta para manejar las sesiones de forma segura (Login)
 app.secret_key = os.environ.get('SECRET_KEY', 'clave_secreta_sofia_tienda_123')
 
@@ -18,6 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///sofia_store.d
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
 
 # ==========================================
 # MODELOS (Tablas de la Base de Datos)
@@ -43,7 +47,7 @@ with app.app_context():
 
 
 # ==========================================
-# RUTAS PÚBLICAS EXISTENTES (Tus avances)
+# RUTAS PÚBLICAS (Vistas de la Tienda)
 # ==========================================
 
 # 1. Ruta para la página de inicio (index.html)
@@ -66,16 +70,15 @@ def clientes():
 def faq():
     return render_template("faq.html")
 
-# 5. Ruta para la página de productos (PÚBLICA - Ahora trae los datos de la BD)
+# 5. Ruta para la página de productos (PÚBLICA - Renderiza dinámicamente desde la BD)
 @app.route("/productos")
 def productos():
-    # Trae todos los productos guardados para mostrarlos dinámicamente
     todos_los_productos = Producto.query.all()
     return render_template("productos.html", productos=todos_los_productos)
 
 
 # ==========================================
-# NUEVAS RUTAS: AUTENTICACIÓN (LOGIN Y REGISTER)
+# RUTAS DE AUTENTICACIÓN (Gestión de Accesos)
 # ==========================================
 
 @app.route("/register", methods=["GET", "POST"])
@@ -125,7 +128,6 @@ def login():
 
 @app.route("/logout")
 def logout():
-    # Eliminamos los datos del usuario de la sesión para cerrar el acceso
     session.pop("admin_id", None)
     session.pop("admin_nombre", None)
     flash("Has cerrado sesión de manera segura.", "success")
@@ -133,13 +135,12 @@ def logout():
 
 
 # ==========================================
-# NUEVAS RUTAS: DASHBOARD ADMINISTRATIVO
+# RUTAS DEL DASHBOARD ADMINISTRATIVO
 # ==========================================
 
 # Menú de inicio del Dashboard
 @app.route("/dashboard")
 def dashboard():
-    # Sistema de seguridad: si no ha iniciado sesión, se le bloquea el paso
     if "admin_id" not in session:
         flash("Acceso denegado. Por favor, inicia sesión.", "warning")
         return redirect(url_for("login"))
@@ -189,16 +190,9 @@ def editar_producto(id):
     return redirect(url_for("dashboard_productos"))
 
 
+# ==========================================
 # CONFIGURACIÓN ESPECIAL PARA DESPLIEGUE
+# ==========================================
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
-    DATABASE_URL = os.environ.get('DATABASE_URL') # 1. Busca la variable en Render
-
-# 2. Corrige un pequeño estándar visual de Postgres para Python
-if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-# 3. Si existe (Render), se conecta a internet. Si no (Tu PC), usa el archivo local.
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///sofia_store.db'
