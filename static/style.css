@@ -631,25 +631,21 @@ footer {
     text-align: center;
 }
 
-/* ==========================================
-   NUEVOS ESTILOS PARA LAS TARJETAS DE PRODUCTO
-   ========================================== */
+/* NUEVOS ESTILOS PARA LAS TARJETAS DE PRODUCTO*/ 
 
-/* Adaptamos tu clase .tarjeta para que soporte la estructura de catálogo */
 .tarjeta {
     background-color: white;
     border-radius: 12px;
-    padding: 0; /* Quitamos el padding global para que la imagen llegue a los bordes */
+    padding: 0;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     border-top: 6px solid #e999eb;
     transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden; /* Asegura que la imagen respete las esquinas redondeadas */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-/* Contenedor de la imagen del producto */
 .producto-img-container {
     width: 100%;
     height: 220px;
@@ -665,21 +661,19 @@ footer {
 }
 
 .tarjeta:hover .producto-img-container img {
-    transform: scale(1.05); /* Efecto sutil de zoom al pasar el mouse */
+    transform: scale(1.05);
 }
 
-/* Cuerpo interno de la tarjeta (aquí devolvemos el padding) */
 .producto-cuerpo {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Empuja la sección de compra hacia abajo para alinear los botones */
+    flex-grow: 1;
     justify-content: space-between;
 }
 
-/* Forzamos una altura constante para títulos y descripciones para que el grid sea simétrico */
 .tarjeta h3 {
-    color: #99558B; /* Cambiado a un tono más oscuro para mejorar la legibilidad */
+    color: #99558B;
     margin: 0 0 8px 0;
     font-size: 1.3rem;
     height: 40px;
@@ -701,9 +695,8 @@ footer {
     overflow: hidden;
 }
 
-/* Sistema de estrellas de calificación */
 .producto-estrellas {
-    color: #ffca28; /* Amarillo dorado para las estrellas */
+    color: #ffca28;
     font-size: 0.9rem;
     margin-bottom: 15px;
 }
@@ -714,12 +707,11 @@ footer {
     margin-left: 5px;
 }
 
-/* Sección inferior: Precio y Botón de compra */
 .producto-compra {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto; /* Alínea esta sección siempre al fondo */
+    margin-top: auto;
     padding-top: 10px;
     border-top: 1px solid #fff0f5;
 }
@@ -727,12 +719,12 @@ footer {
 .producto-precio {
     font-size: 1.3rem;
     font-weight: bold;
-    color: #c254d8; /* Usando tu color morado acento */
+    color: #c254d8;
 }
 
 /* Botón Añadir al Carrito */
 .btn-carrito {
-    background-color: #2ed573; /* Verde alegre que resalta para la acción de compra */
+    background-color: #2ed573;
     color: white;
     border: none;
     padding: 10px 14px;
@@ -749,4 +741,178 @@ footer {
 .btn-carrito:hover {
     background-color: #26af5f;
     transform: scale(1.03);
+}
+
+/* NUEVOS ESTILOS INTERNOS: AUTH & DASHBOARD */
+
+.auth-seccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh;
+    padding: 20px;
+}
+
+.tarjeta-auth {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    border-top: 6px solid #e999eb;
+}
+
+.tarjeta-auth h2 {
+    color: #99558B;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.tarjeta-auth p {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+/* Alertas/Mensajes de Flask */
+.alertas-flask {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.alerta-item {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.alerta-item.danger { background-color: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+.alerta-item.success { background-color: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+.alerta-item.warning { background-color: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }
+
+/* Estructura del Layout del Dashboard */
+.dashboard-contenedor {
+    display: flex;
+    min-height: 80vh;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+/* Barra lateral del panel */
+.dashboard-sidebar {
+    width: 250px;
+    background-color: #fffbfd;
+    border-right: 1px solid #ffdeeb;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-sidebar h3 {
+    color: #99558B;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-bottom: 2px solid #fff0f5;
+    padding-bottom: 15px;
+}
+
+.sidebar-enlaces {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-enlaces a {
+    display: block;
+    padding: 12px 15px;
+    color: #4a4a4a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.sidebar-enlaces li.active a,
+.sidebar-enlaces a:hover {
+    background-color: #fff0f5;
+    color: #c254d8;
+}
+
+.sidebar-enlaces a.logout-link {
+    color: #dc3545;
+    margin-top: auto;
+}
+
+.sidebar-enlaces a.logout-link:hover {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Espacio de contenido del Dashboard */
+.dashboard-main {
+    flex: 1;
+    padding: 40px;
+    background-color: #fffbfd;
+}
+
+.dashboard-main h2 {
+    color: #3d3d3d;
+    margin-top: 0;
+    font-size: 1.8rem;
+}
+
+/* Grid de accesos directos en el menú de inicio */
+.dashboard-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.dash-tarjeta-acceso {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #ffdeeb;
+    border-top: 4px solid #c254d8;
+    text-align: left;
+}
+
+.dash-tarjeta-acceso h4 {
+    margin: 0 0 10px 0;
+    color: #99558B;
+    font-size: 1.1rem;
+}
+
+.dash-tarjeta-acceso p {
+    margin: 0 0 15px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.dash-btn-link {
+    display: inline-block;
+    color: #c254d8;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.dash-btn-link:hover {
+    color: #99558B;
+    text-decoration: underline;
 }
