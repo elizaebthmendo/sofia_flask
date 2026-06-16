@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - Inicio</title>
+    <title>Panel de Administración</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -15,28 +15,16 @@
                 <h3>Panel Sofia</h3>
                 <ul class="sidebar-enlaces">
                     <li class="active"><a href="{{ url_for('dashboard') }}">🏠 Inicio Panel</a></li>
-                    <li><a href="{{ url_for('dashboard_productos') }}">📦 Gestionar Catálogo</a></li>
                     <li><a href="{{ url_for('index') }}">🌐 Ir a la Web Pública</a></li>
                     <li style="margin-top: auto;"><a href="{{ url_for('logout') }}" class="logout-link">🚪 Cerrar Sesión</a></li>
                 </ul>
             </aside>
 
-            <main class="dashboard-main">
-                <h2>Bienvenida al Gestor de Tienda</h2>
-                <p style="color: #666; line-height: 1.6;">Desde este apartado privado tienes el control total para actualizar el inventario visible en la página pública y registrar nuevos administradores autorizados.</p>
-
-                <div class="dashboard-menu-grid">
-                    <div class="dash-tarjeta-acceso">
-                        <h4>Control del Catálogo</h4>
-                        <p>Añade nuevos productos, modifica precios, descripciones o actualiza los enlaces de imágenes de forma directa.</p>
-                        <a href="{{ url_for('dashboard_productos') }}" class="dash-btn-link">Administrar Productos →</a>
-                    </div>
-
-                    <div class="dash-tarjeta-acceso" style="border-top-color: #99558B;">
-                        <h4>Registrar un Colega</h4>
-                        <p>Si necesitas dar acceso a otra persona, puedes generar credenciales adicionales desde la pantalla de registro.</p>
-                        <a href="{{ url_for('register') }}" class="dash-btn-link">Ir a Registro Admin →</a>
-                    </div>
+            <main class="dashboard-main" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh; color: #a0a0a0;">
+                <div style="text-align: center;">
+                    <span style="font-size: 3rem;">✨</span>
+                    <h2 style="color: #3d3d3d; margin-top: 10px; margin-bottom: 5px;">¡Bienvenida al Panel!</h2>
+                    <p style="font-size: 0.95rem; margin: 0;">Selecciona una opción de la barra lateral para empezar a navegar.</p>
                 </div>
             </main>
 
