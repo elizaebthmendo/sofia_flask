@@ -136,7 +136,7 @@ def logout():
 
 # ==========================================
 # RUTAS DEL DASHBOARD ADMINISTRATIVO
-# ==========================================
+# =========================================
 
 # Menú de inicio del Dashboard
 @app.route("/dashboard")
