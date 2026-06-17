@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate  # <-- 1. Agregamos la importación
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
@@ -18,6 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///sofia_store.d
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)  # <-- 2. Inicializamos Flask-Migrate aquí
 
 
 # ==========================================
@@ -37,14 +39,13 @@ class Producto(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     precio = db.Column(db.Float, nullable=False)
     imagen_url = db.Column(db.String(300), nullable=False)
-    descripcion = db.Column(db.Text, nullable=True)     # <-- Columna integrada
-    estrellas = db.Column(db.Float, nullable=True)       # <-- Columna integrada
+    descripcion = db.Column(db.Text, nullable=True)     
+    estrellas = db.Column(db.Float, nullable=True)      
 
-# TRUCO TEMPORAL PARA RECREAR LAS TABLAS EN RENDER
-with app.app_context():
-    db.drop_all()   # <-- ¡Línea mágica! Borra lo obsoleto y problemático en este despliegue
-    db.create_all()  # <-- Crea de inmediato la estructura limpia con las 5 columnas
+# 3. ¡ELIMINAMOS EL BLOQUE db.create_all() QUE ESTABA AQUÍ!
+# Ya no es necesario porque Alembic manejará la estructura.
 
+# ... (El resto de tus rutas se mantiene exactamente igual)
 
 # ==========================================
 # RUTAS PÚBLICAS 
