@@ -1,214 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes - Piñatería Fiesta Mágica</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../static/style.css">
-</head>
-
-<body>
-    <nav class="navbar" id="inicio">
-        <div class="nav-izquierda">
-            <a href="{{ url_for('inicio') }}">Inicio</a>
-            <a href="{{ url_for('productos') }}">Productos</a>
-            <a href="{{ url_for('contacto') }}">Contacto</a>
-            <a href="{{ url_for('clientes') }}">Clientes</a>
-            <a href="{{ url_for('faq') }}">FAQ</a>
-        </div>
-        <div class="nav-derecha">
-            <div class="search-box">
-                <input type="text" placeholder="Buscar piñatas, dulces...">
-                <button type="submit">
-                    <a href="#buscar" class="icon-link" title="Buscar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-search" viewBox="0 0 16 16">
-                            <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                        </svg>
-                    </a>
-                </button>
+<div class="grid-producto">
+        {% for prod in productos %}
+        <div class="tarjeta">
+            <div class="producto-img-container">
+                <img src="{{ prod.imagen_url }}" alt="{{ prod.nombre }}">
             </div>
-            <div class="nav-icons">
-                <a href="#cuenta" class="icon-link" title="Mi Cuenta">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-fill" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                    </svg>
-                </a>
-                <a href="#carrito" class="icon-link" title="Carrito de Compras">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-cart-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                    </svg>
-                </a>
+            <div class="producto-cuerpo">
+                <span class="badge">Catálogo</span>
+                <h3>{{ prod.nombre }}</h3>
+                
+                <p>{{ prod.descripcion }}</p>
+
+                <div class="producto-estrellas">
+                    <i class="bi bi-star-fill"></i>
+                    <span>({{ prod.estrellas or 5.0 }})</span>
+                </div>
+                
+                <div class="producto-compra">
+                    <span class="producto-precio">S/ {{ "%.2f"|format(prod.precio) }}</span>
+                    <button class="btn-carrito">
+                        <i class="bi bi-cart"></i> Agregar
+                    </button>
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="hero-container">
-        <img src="{{ url_for('static', filename='img/hero2.jpg') }}" alt="Fondo de Piñatería Fiesta Mágica"
-            class="hero-bg">
-        <div class="hero-cliente">
-            <h2>Nuestros Productos</h2>
-            <p>Explora nuestro catálogo tenemos, dulces y las piñatas más espectaculares hechas a medida para tus
-                personajes favoritos.</p>
-        </div>
+        {% endfor %}
     </div>
-    <div class="grid-producto">
-
-        <!-- Tarjeta de Producto Individual -->
-        <div class="tarjeta">
-            <div class="producto-img-container">
-                <img src="{{ url_for('static', filename='img/productos/producto01.jpeg') }}" alt="Piñata Temática">
-            </div>
-            <div class="producto-cuerpo">
-                <span class="badge">Destacado</span>
-                <h3>Piñata Temática </h3>
-                <p>Piñatas de alta resistencia con acabados en relieve 3D del personaje favorito de tu peque.
-                </p>
-
-                <!-- Estrellas -->
-                <div class="producto-estrellas">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
-                    <span>(4.5)</span>
-                </div>
-                <!-- Precio y Carrito -->
-                <div class="producto-compra">
-                    <span class="producto-precio">S/ 45.00</span>
-                    <button class="btn-carrito">
-                        <i class="bi bi-cart"></i> Agregar
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="tarjeta">
-            <div class="producto-img-container">
-                <img src="{{ url_for('static', filename='img/productos/producto02.jpg') }}" alt="Relleno">
-            </div>
-            <div class="producto-cuerpo">
-                <span class="badge">Más Vendido</span>
-                <h3>Combo Relleno Clásico</h3>
-                <p>Mix variado de caramelos, chupetines, chocolates y mini juguetes
-                </p>
-
-                <!-- Estrellas -->
-                <div class="producto-estrellas">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <span>(4.8)</span>
-                </div>
-
-                <!-- Precio y Carrito -->
-                <div class="producto-compra">
-                    <span class="producto-precio">S/ 30.00</span>
-                    <button class="btn-carrito">
-                        <i class="bi bi-cart"></i> Agregar
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="producto-img-container">
-                <img src="{{ url_for('static', filename='img/productos/producto03.jpeg') }}" alt="Globos Arco">
-            </div>
-            <div class="producto-cuerpo">
-                <span class="badge">Tendencia</span>
-                <h3>Kit de Globos Arco</h3>
-                <p>Set de 100 globos de látex de diferentes tamaños y globos metálicos combinados. Incluye cinta guía
-                </p>
-
-                <!-- Estrellas -->
-                <div class="producto-estrellas">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <span>(5.0)</span>
-                </div>
-
-                <!-- Precio y Carrito -->
-                <div class="producto-compra">
-                    <span class="producto-precio">S/ 18.00</span>
-                    <button class="btn-carrito">
-                        <i class="bi bi-cart"></i> Agregar
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="producto-img-container">
-                <img src="{{ url_for('static', filename='img/productos/producto04.jpeg') }}" alt="Mesa Descartable">
-            </div>
-            <div class="producto-cuerpo">
-                <span class="badge">Completo</span>
-                <h3>Kit de Mesa Descartable</h3>
-                <p>Incluye platos de alta densidad, vasos decorados, servilletas absorbentes y un mantel a juego.
-                </p>
-
-                <!-- Estrellas hi -->
-                <div class="producto-estrellas">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
-                    <span>(4.5)</span>
-                </div>
-
-                <!-- Precio y Carrito -->
-                <div class="producto-compra">
-                    <span class="producto-precio">S/ 18.00</span>
-                    <button class="btn-carrito">
-                        <i class="bi bi-cart"></i> Agregar
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="producto-img-container">
-                <img src="{{ url_for('static', filename='img/productos/producto05.jpg') }}" alt="Cortina Metalica">
-            </div>
-            <div class="producto-cuerpo">
-                <span class="badge">Fiesta</span>
-                <h3>Set Cortinas Metálicas</h3>
-                <p>Incluye 2 cortinas de brillo metálico (foil) y un banner elegante de "Feliz Cumpleaños".
-                </p>
-
-                <!-- Estrellas -->
-                <div class="producto-estrellas">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <span>(5.0)</span>
-                </div>
-
-                <!-- Precio y Carrito -->
-                <div class="producto-compra">
-                    <span class="producto-precio">S/ 15.00</span>
-                    <button class="btn-carrito">
-                        <i class="bi bi-cart"></i> Agregar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer id="contacto">
-        <p>&copy; 2026 Piñatería Sofia - Armando los mejores momentos de Lima.</p>
-    </footer>
-</body>
-
-</html>

@@ -816,14 +816,15 @@ footer {
     flex-direction: column;
 }
 
-.dashboard-sidebar h3 {
-    color: #99558B;
+.dashboard-sidebar h3 a {
+    color: #c254d8;
     margin-top: 0;
     margin-bottom: 25px;
     font-size: 1.2rem;
     text-align: center;
     border-bottom: 2px solid #fff0f5;
     padding-bottom: 15px;
+    text-decoration: none;
 }
 
 .sidebar-enlaces {

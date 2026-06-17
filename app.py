@@ -19,15 +19,33 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+# Cambia temporalmente esta parte en tu app.py:
+with app.app_context():
+    # db.create_all() <-- Comenta esta línea poniendo un # antes
+    
+    # Y pega esta línea mágica justo abajo:
+    db.engine.execute('ALTER TABLE producto ADD COLUMN descripcion TEXT; ALTER TABLE producto ADD COLUMN estrellas FLOAT DEFAULT 5.0;')
+
 
 # ==========================================
-# MODELOS (Solo Administrador por ahora)
+# MODELOS (Tablas de la Base de Datos)
 # ==========================================
+
+# Tabla para guardar a los usuarios administradores
 class Administrador(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
+
+# Tabla para guardar los productos con descripción y estrellas
+class Producto(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    precio = db.Column(db.Float, nullable=False)
+    imagen_url = db.Column(db.String(300), nullable=False)
+    descripcion = db.Column(db.Text, nullable=True)     # <-- Campo integrado
+    estrellas = db.Column(db.Float, nullable=True)       # <-- Campo integrado
 
 with app.app_context():
     db.create_all()
@@ -54,8 +72,9 @@ def faq():
 
 @app.route("/productos")
 def productos():
-    # Retorna la vista estática normal que ya tenías armada
-    return render_template("productos.html")
+    # Trae dinámicamente los productos creados desde el administrador
+    todos_los_productos = Producto.query.all()
+    return render_template("productos.html", productos=todos_los_productos)
 
 
 # ==========================================
@@ -111,7 +130,7 @@ def logout():
 
 
 # ==========================================
-# GESTIÓN DEL DASHBOARD (Limpio)
+# GESTIÓN DEL DASHBOARD ADMINISTRATIVO
 # ==========================================
 @app.route("/dashboard")
 def dashboard():
@@ -120,6 +139,58 @@ def dashboard():
         return redirect(url_for("login"))
         
     return render_template("dashboard.html")
+
+# Vista para ver el panel de gestión de productos
+@app.route("/dashboard/productos")
+def dashboard_productos():
+    if "admin_id" not in session:
+        flash("Acceso denegado.", "warning")
+        return redirect(url_for("login"))
+        
+    todos_los_productos = Producto.query.all()
+    return render_template("dashboard_productos.html", productos=todos_los_productos)
+
+# Acción para AGREGAR un nuevo producto desde el panel
+@app.route("/dashboard/productos/agregar", methods=["POST"])
+def agregar_producto():
+    if "admin_id" not in session:
+        return redirect(url_for("login"))
+        
+    nombre = request.form.get("nombre")
+    precio = request.form.get("precio")
+    imagen_url = request.form.get("imagen_url")
+    descripcion = request.form.get("descripcion")
+    estrellas = request.form.get("estrellas")
+    
+    nuevo_prod = Producto(
+        nombre=nombre, 
+        precio=float(precio), 
+        imagen_url=imagen_url,
+        descripcion=descripcion,
+        estrellas=float(estrellas) if estrellas else 5.0
+    )
+    db.session.add(nuevo_prod)
+    db.session.commit()
+    
+    flash("Producto añadido exitosamente al catálogo.", "success")
+    return redirect(url_for("dashboard_productos"))
+
+# Acción para ACTUALIZAR/EDITAR un producto desde el panel
+@app.route("/dashboard/productos/editar/<int:id>", methods=["POST"])
+def editar_producto(id):
+    if "admin_id" not in session:
+        return redirect(url_for("login"))
+        
+    producto = Producto.query.get_or_404(id)
+    producto.nombre = request.form.get("nombre")
+    producto.precio = float(request.form.get('precio'))
+    producto.imagen_url = request.form.get("imagen_url")
+    producto.descripcion = request.form.get("descripcion")
+    producto.estrellas = float(request.form.get("estrellas"))
+    
+    db.session.commit()
+    flash("Producto actualizado correctamente.", "success")
+    return redirect(url_for("dashboard_productos"))
 
 
 if __name__ == "__main__":
