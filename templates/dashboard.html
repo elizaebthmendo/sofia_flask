@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
     <div class="container" style="max-width: 1200px;">
         <div class="dashboard-contenedor">
-            
+
             <aside class="dashboard-sidebar">
                 <h3>Panel Sofia</h3>
                 <ul class="sidebar-enlaces">
                     <li class="active"><a href="{{ url_for('dashboard') }}">🏠 Inicio Panel</a></li>
-                    <li><a href="{{ url_for('dashboard_productos') }}">📦 Gestionar Catálogo</a></li>
                     <li><a href="{{ url_for('inicio') }}">🌐 Ir a la Web Pública</a></li>
-                    <li style="margin-top: auto;"><a href="{{ url_for('logout') }}" class="logout-link">🚪 Cerrar Sesión</a></li>
+                    <li style="margin-top: auto;"><a href="{{ url_for('logout') }}" class="logout-link">🚪 Cerrar
+                            Sesión</a></li>
                 </ul>
             </aside>
 
-            <main class="dashboard-main" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh; color: #a0a0a0;">
+            <main class="dashboard-main"
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh; color: #a0a0a0;">
                 <div style="text-align: center;">
                     <span style="font-size: 3rem;">✨</span>
                     <h2 style="color: #3d3d3d; margin-top: 10px; margin-bottom: 5px;">¡Bienvenida al Panel!</h2>
-                    <p style="font-size: 0.95rem; margin: 0;">Selecciona una opción de la barra lateral para empezar a navegar.</p>
+                    <p style="font-size: 0.95rem; margin: 0;">Selecciona una opción de la barra lateral para empezar a
+                        navegar.</p>
                 </div>
             </main>
 
@@ -33,4 +37,5 @@
     </div>
 
 </body>
+
 </html>
