@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate  # <-- 1. Agregamos la importación
+from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
@@ -19,21 +19,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///sofia_store.d
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)  # <-- 2. Inicializamos Flask-Migrate aquí
+migrate = Migrate(app, db)
 
 
 # ==========================================
 # MODELOS (Tablas de la Base de Datos)
 # ==========================================
 
-# Tabla para guardar a los usuarios administradores
 class Administrador(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
 
-# Tabla para guardar los productos con descripción y estrellas
 class Producto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
@@ -42,10 +40,6 @@ class Producto(db.Model):
     descripcion = db.Column(db.Text, nullable=True)     
     estrellas = db.Column(db.Float, nullable=True)      
 
-# 3. ¡ELIMINAMOS EL BLOQUE db.create_all() QUE ESTABA AQUÍ!
-# Ya no es necesario porque Alembic manejará la estructura.
-
-# ... (El resto de tus rutas se mantiene exactamente igual)
 
 # ==========================================
 # RUTAS PÚBLICAS 
@@ -184,13 +178,9 @@ def editar_producto(id):
     flash("Producto actualizado correctamente.", "success")
     return redirect(url_for("dashboard_productos"))
 
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
-
 @app.route("/dashboard/productos/eliminar/<int:id>", methods=["POST"])
 def eliminar_producto(id):
+    """Elimina un producto del catálogo (Solo una vez declarado aquí)."""
     if "admin_id" not in session:
         return redirect(url_for("login"))
         
@@ -200,6 +190,7 @@ def eliminar_producto(id):
     
     flash("Producto eliminado correctamente del catálogo.", "danger")
     return redirect(url_for("dashboard_productos"))
+
 
 # ==========================================================================
 # RUTAS PARA EL CARRITO DE COMPRAS
@@ -286,22 +277,6 @@ def eliminar_del_carrito(id):
         session.modified = True
         flash('Producto eliminado del carrito.', 'warning')
     return redirect(url_for('ver_carrito'))
-
-
-# ==========================================================================
-# GESTIÓN DE ELIMINACIÓN DEL CATÁLOGO (UNA SOLA VEZ)
-# ==========================================================================
-@app.route("/dashboard/productos/eliminar/<int:id>", methods=["POST"])
-def eliminar_producto(id):
-    if "admin_id" not in session:
-        return redirect(url_for("login"))
-        
-    producto = Producto.query.get_or_404(id)
-    db.session.delete(producto)
-    db.session.commit()
-    
-    flash("Producto eliminado correctamente del catálogo.", "danger")
-    return redirect(url_for("dashboard_productos"))
 
 
 # ==========================================
