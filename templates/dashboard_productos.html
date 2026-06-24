@@ -24,12 +24,12 @@
 
         <main class="main-content">
             
-            <p style="margin-bottom: 20px; color: #555;">¡Bienvenida de vuelta, {{ session['admin_nombre'] }}!</p>
+            <p style="margin-bottom: 15px; color: #555;">¡Bienvenida de vuelta, {{ session['admin_nombre'] }}!</p>
 
-            <div class="dashboard-header-acciones" style="background: linear-gradient(135deg, #fdf6fa 0%, #fff0f5 100%); padding: 30px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #ffdeeb;">
-                <div>
-                    <h2 style="margin: 0; color: #99558B; font-size: 2rem;">Gestión de Productos</h2>
-                    <p style="margin: 8px 0 0 0; color: #666; font-size: 1.05rem;">Agrega, edita o elimina los productos del catálogo público.</p>
+            <div class="dashboard-header-acciones">
+                <div class="hero-textos">
+                    <h2 style="margin: 0; color: #99558B;">Gestión de Productos</h2>
+                    <p style="margin: 5px 0 0 0; color: #666;">Agrega, edita o elimina los productos del catálogo público.</p>
                 </div>
                 <button class="btn-nuevo-producto" id="btnAbrirModal">
                     <i class="bi bi-plus-circle"></i> Nuevo Producto
@@ -46,7 +46,7 @@
                 {% endif %}
             {% endwith %}
 
-            <h3 style="color: #4a4a4a; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">📋 Productos en Base de Datos</h3>
+            <h3 style="color: #4a4a4a; margin-top: 25px; margin-bottom: 15px;">📋 Productos en Base de Datos</h3>
             <div class="tabla-contenedor">
                 <table class="tabla-productos">
                     <thead>
