@@ -18,15 +18,18 @@
         <a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
     </nav>
 
-    <div class="banner-gestion">
-        <h2>Gestión de Productos</h2>
-        <p>Agrega, edita o elimina los productos del catálogo público.</p>
-        <button id="btnAbrirModal">
+    <br>
+    <p>¡Bienvenida de vuelta, {{ session['admin_nombre'] }}!</p>
+
+    <div class="dashboard-header-acciones">
+        <div>
+            <h2 style="margin: 0; color: #333;">Gestión de Productos</h2>
+            <p style="margin: 5px 0 0 0; color: #666;">Agrega, edita o elimina los productos del catálogo público.</p>
+        </div>
+        <button class="btn-nuevo-producto" id="btnAbrirModal">
             <i class="bi bi-plus-circle"></i> Nuevo Producto
         </button>
     </div>
-
-    <p>¡Bienvenida de vuelta, {{ session['admin_nombre'] }}!</p>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -47,7 +50,7 @@
                     <th>Nombre del Producto</th>
                     <th>Precio</th>
                     <th>Estrellas</th>
-                    <th>Acciones</th>
+                    <th style="text-align: center;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -100,28 +103,28 @@
             <div class="modal-cuerpo">
                 <form action="{{ url_for('agregar_producto') }}" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
-                        <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Título del Producto</label>
-                           <input type="text" name="nombre" placeholder="Ej. Kit de Globos Arco" required>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                           <label style="font-weight: 600; font-size: 0.9rem;">Título del Producto</label>
+                           <input type="text" name="nombre" placeholder="Ej. Kit de Globos Arco" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                         </div>
-                        <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Precio (S/.)</label>
-                           <input type="number" step="0.01" name="precio" placeholder="18.00" required>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                           <label style="font-weight: 600; font-size: 0.9rem;">Precio (S/.)</label>
+                           <input type="number" step="0.01" name="precio" placeholder="18.00" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                         </div>
-                        <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Estrellas (0 al 5)</label>
-                           <input type="number" step="0.1" min="0" max="5" name="estrellas" placeholder="4.5" required>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                           <label style="font-weight: 600; font-size: 0.9rem;">Estrellas</label>
+                           <input type="number" step="0.1" min="0" max="5" name="estrellas" placeholder="4.5" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                         </div>
                     </div>
 
-                    <div class="grupo-input" style="margin-bottom: 0;">
-                        <label>Ruta o URL de la Imagen</label>
-                        <input type="text" name="imagen_url" placeholder="/static/img/productos/producto03.jpeg" required>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-weight: 600; font-size: 0.9rem;">Ruta o URL de la Imagen</label>
+                        <input type="text" name="imagen_url" placeholder="/static/img/productos/producto03.jpeg" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                     </div>
 
-                    <div class="grupo-input" style="margin-bottom: 0;">
-                        <label>Descripción del Producto</label>
-                        <textarea name="descripcion" rows="3" placeholder="Escribe aquí los detalles del producto..." required style="resize: vertical;"></textarea>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-weight: 600; font-size: 0.9rem;">Descripción del Producto</label>
+                        <textarea name="descripcion" rows="3" placeholder="Escribe aquí los detalles..." required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px; resize: vertical;"></textarea>
                     </div>
                     
                     <button type="submit" class="btn-guardar-modal">Guardar Producto</button>
@@ -131,39 +134,39 @@
     </div>
 
     <div id="modalEditarProducto" class="modal-overlay">
-        <div class="modal-wrapper">
-            <div class="modal-cabecera" style="background: #6f42c1;">
+        <div class="modal-wrapper" style="border-top-color: #c254d8;">
+            <div class="modal-cabecera">
                 <h3>✏️ Editar Producto</h3>
                 <button class="modal-cerrar" onclick="cerrarModalEditar()">&times;</button>
             </div>
             <div class="modal-cuerpo">
                 <form id="formEditar" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
-                        <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Título del Producto</label>
-                           <input type="text" id="edit_nombre" name="nombre" required>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                           <label style="font-weight: 600; font-size: 0.9rem;">Título del Producto</label>
+                           <input type="text" id="edit_nombre" name="nombre" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                         </div>
-                        <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Precio (S/.)</label>
-                           <input type="number" step="0.01" id="edit_precio" name="precio" required>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                           <label style="font-weight: 600; font-size: 0.9rem;">Precio (S/.)</label>
+                           <input type="number" step="0.01" id="edit_precio" name="precio" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                         </div>
-                        <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Estrellas (0 al 5)</label>
-                           <input type="number" step="0.1" min="0" max="5" id="edit_estrellas" name="estrellas" required>
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                           <label style="font-weight: 600; font-size: 0.9rem;">Estrellas</label>
+                           <input type="number" step="0.1" min="0" max="5" id="edit_estrellas" name="estrellas" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                         </div>
                     </div>
 
-                    <div class="grupo-input" style="margin-bottom: 0;">
-                        <label>Ruta o URL de la Imagen</label>
-                        <input type="text" id="edit_imagen_url" name="imagen_url" required>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-weight: 600; font-size: 0.9rem;">Ruta o URL de la Imagen</label>
+                        <input type="text" id="edit_imagen_url" name="imagen_url" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px;">
                     </div>
 
-                    <div class="grupo-input" style="margin-bottom: 0;">
-                        <label>Descripción del Producto</label>
-                        <textarea id="edit_descripcion" name="descripcion" rows="3" required style="resize: vertical;"></textarea>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-weight: 600; font-size: 0.9rem;">Descripción del Producto</label>
+                        <textarea id="edit_descripcion" name="descripcion" rows="3" required style="padding: 8px; border: 1px solid #ffdeeb; border-radius: 6px; resize: vertical;"></textarea>
                     </div>
                     
-                    <button type="submit" class="btn-guardar-modal" style="background: #6f42c1;">Actualizar Cambios</button>
+                    <button type="submit" class="btn-guardar-modal" style="background: #c254d8;">Actualizar Cambios</button>
                 </form>
             </div>
         </div>
@@ -175,7 +178,6 @@
         const btnCerrarAgregar = document.getElementById('btnCerrarModal');
         const modalEditar = document.getElementById('modalEditarProducto');
 
-        // Lógica para abrir/cerrar modal de agregar
         if (btnAbrirAgregar && modalAgregar && btnCerrarAgregar) {
             btnAbrirAgregar.addEventListener('click', () => {
                 modalAgregar.classList.add('mostrar');
@@ -185,7 +187,6 @@
             });
         }
 
-        // Lógica para abrir modal de editar con datos precargados
         function abrirModalEditar(id, nombre, precio, estrellas, url, descripcion) {
             const formEditar = document.getElementById('formEditar');
             if (formEditar) {
@@ -209,7 +210,6 @@
             }
         }
 
-        // Cerrar al hacer clic fuera del modal
         window.addEventListener('click', (e) => {
             if (e.target === modalAgregar) {
                 modalAgregar.classList.remove('mostrar');
