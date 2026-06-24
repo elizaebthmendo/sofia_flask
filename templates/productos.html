@@ -58,6 +58,7 @@
                 personajes favoritos.</p>
         </div>
     </div>
+    
     <div class="grid-producto">
         {% for prod in productos %}
         <div class="tarjeta">
@@ -75,16 +76,22 @@
                     <span>({{ prod.estrellas or 5.0 }})</span>
                 </div>
 
-                <div class="producto-compra">
+                <form action="{{ url_for('agregar_al_carrito', id=prod.id) }}" method="POST" class="producto-compra">
                     <span class="producto-precio">S/ {{ "%.2f"|format(prod.precio) }}</span>
-                    <button class="btn-carrito">
+                    
+                    <input type="hidden" name="nombre" value="{{ prod.nombre }}">
+                    <input type="hidden" name="precio" value="{{ prod.precio }}">
+                    <input type="hidden" name="imagen_url" value="{{ prod.imagen_url }}">
+                    
+                    <button type="submit" class="btn-carrito">
                         <i class="bi bi-cart"></i> Agregar
                     </button>
-                </div>
+                </form>
             </div>
         </div>
         {% endfor %}
     </div>
+    
     <footer id="contacto">
         <p>&copy; 2026 Piñatería Sofia - Armando los mejores momentos de Lima.</p>
     </footer>

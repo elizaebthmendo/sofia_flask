@@ -208,7 +208,6 @@ def eliminar_producto(id):
 @app.route('/dashboard/carrito')
 def ver_carrito():
     """Muestra los productos que están actualmente en el carrito."""
-    # Si el carrito no existe en la sesión, lo inicializamos vacío
     if 'carrito' not in session:
         session['carrito'] = {}
         
@@ -216,8 +215,6 @@ def ver_carrito():
     total = 0
     productos_carrito = []
     
-    # Aquí simulamos o procesamos los productos que están en la sesión
-    # En un entorno real, puedes validar contra tu base de datos 'productos'
     for id_prod, item in carrito.items():
         subtotal = item['precio'] * item['cantidad']
         total += subtotal
@@ -246,36 +243,40 @@ def agregar_al_carrito(id):
     precio = float(request.form.get('precio'))
     imagen_url = request.form.get('imagen_url')
     
-    # Si el producto ya está en el carrito, sumamos 1 a la cantidad
-    if id in carrito:
-        carrito[id]['cantidad'] += 1
+    id_str = str(id)  # Forzar el ID a string evita conflictos de llaves en la sesión
+    
+    # Si el producto ya está en el carrito, sumamos 1
+    if id_str in carrito:
+        carrito[id_str]['cantidad'] += 1
     else:
         # Si es nuevo, lo registramos
-        carrito[id] = {
+        carrito[id_str] = {
             'nombre': nombre,
             'precio': precio,
             'imagen_url': imagen_url,
             'cantidad': 1
         }
         
-    session.modified = True  # Le avisamos a Flask que la sesión cambió
+    session.modified = True  # Obligatorio para guardar cambios en Flask
     flash('¡Producto añadido al carrito! 🛒', 'success')
-    return redirect(url_for('dashboard_productos'))
+    
+    # CORRECCIÓN AQUÍ: Redirigir a la tienda pública, no al panel de administración
+    return redirect(url_for('productos'))
 
 
 @app.route('/dashboard/carrito/actualizar/<id>/<accion>')
 def actualizar_cantidad(id, accion):
     """Incrementa o decrementa la cantidad de un producto en el carrito."""
-    if 'carrito' in session and id in session['carrito']:
+    id_str = str(id)
+    if 'carrito' in session and id_str in session['carrito']:
         carrito = session['carrito']
         
         if accion == 'incrementar':
-            carrito[id]['cantidad'] += 1
+            carrito[id_str]['cantidad'] += 1
         elif accion == 'decrementar':
-            carrito[id]['cantidad'] -= 1
-            # Si la cantidad llega a 0, eliminamos el producto automáticamente
-            if carrito[id]['cantidad'] <= 0:
-                carrito.pop(id)
+            carrito[id_str]['cantidad'] -= 1
+            if carrito[id_str]['cantidad'] <= 0:
+                carrito.pop(id_str)
                 
         session.modified = True
     return redirect(url_for('ver_carrito'))
@@ -284,8 +285,30 @@ def actualizar_cantidad(id, accion):
 @app.route('/dashboard/carrito/eliminar/<id>')
 def eliminar_del_carrito(id):
     """Elimina por completo un producto del carrito."""
-    if 'carrito' in session and id in session['carrito']:
-        session['carrito'].pop(id)
+    id_str = str(id)
+    if 'carrito' in session and id_str in session['carrito']:
+        session['carrito'].pop(id_str)
         session.modified = True
         flash('Producto eliminado del carrito.', 'warning')
     return redirect(url_for('ver_carrito'))
+
+
+@app.route("/dashboard/productos/eliminar/<int:id>", methods=["POST"])
+def eliminar_producto(id):
+    if "admin_id" not in session:
+        return redirect(url_for("login"))
+        
+    producto = Producto.query.get_or_404(id)
+    db.session.delete(producto)
+    db.session.commit()
+    
+    flash("Producto eliminado correctamente del catálogo.", "danger")
+    return redirect(url_for("dashboard_productos"))
+
+
+# ==========================================
+# LEVANTAMIENTO DEL SERVIDOR (SIEMPRE AL FINAL)
+# ==========================================
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
