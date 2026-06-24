@@ -38,7 +38,7 @@
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                     </svg>
                 </a>
-                <a href="#carrito" class="icon-link" title="Carrito de Compras">
+                <a href="{{ url_for('ver_carrito') }}" class="icon-link" title="Carrito de Compras">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-cart-fill" viewBox="0 0 16 16">
                         <path
@@ -49,7 +49,8 @@
         </div>
     </nav>
     <div class="hero-container">
-        <img src="{{ url_for('static', filename='img/hero2.jpg') }}" alt="Fondo de Piñatería Fiesta Mágica" class="hero-bg">
+        <img src="{{ url_for('static', filename='img/hero2.jpg') }}" alt="Fondo de Piñatería Fiesta Mágica"
+            class="hero-bg">
         <div class="hero-contacto">
             <h2>Contacto</h2>
             <p>Descubre varias formas de contactarnos</p>
@@ -83,8 +84,9 @@
                     <div class="grupo-input"> <label for="mensaje">¿En qué consiste tu fiesta o temática?</label>
                         <textarea id="mensaje" name="mensaje" rows="5"
                             placeholder="Cuéntanos qué personaje quieres, medidas o qué pack te interesa..."
-                            required></textarea> </div> <button type="submit" class="btn-enviar">Enviar Mensaje
-                        </button>
+                            required></textarea>
+                    </div> <button type="submit" class="btn-enviar">Enviar Mensaje
+                    </button>
                 </form>
             </div>
         </div>

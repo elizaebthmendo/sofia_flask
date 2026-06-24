@@ -1384,3 +1384,88 @@ footer {
     transition: background 0.2s;
 }
 .btn-guardar-modal:hover { background: #7c3a6e; }
+/* ==========================================================================
+   ESTILOS COMPLEMENTARIOS DEL CARRITO PÚBLICO
+   ========================================================================== */
+
+.carrito-publico-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Controles de cantidad minimalistas */
+.btn-cantidad-control {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    background-color: #fff0f5;
+    color: #99558B;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+.btn-cantidad-control:hover {
+    background-color: #99558B;
+    color: white;
+}
+
+/* Botón papelera para quitar ítem */
+.btn-quitar-item {
+    color: #e55039;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+.btn-quitar-item:hover {
+    color: #b33925;
+}
+
+/* Tarjeta lateral de resumen de compra */
+.resumen-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border-top: 5px solid #99558B;
+}
+
+.resumen-card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #fff0f5;
+    padding-bottom: 10px;
+}
+
+.resumen-fila {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.resumen-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px dashed #fff0f5;
+    padding-top: 15px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #99558B;
+}
+
+/* Responsivo para celulares */
+@media (max-width: 900px) {
+    .carrito-publico-grid {
+        grid-template-columns: 1fr;
+    }
+}

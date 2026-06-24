@@ -39,7 +39,7 @@
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                     </svg>
                 </a>
-                <a href="#carrito" class="icon-link" title="Carrito de Compras">
+                <a href="{{ url_for('ver_carrito') }}" class="icon-link" title="Carrito de Compras">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-cart-fill" viewBox="0 0 16 16">
                         <path
@@ -67,14 +67,14 @@
             <div class="producto-cuerpo">
                 <span class="badge">Catálogo</span>
                 <h3>{{ prod.nombre }}</h3>
-                
+
                 <p>{{ prod.descripcion }}</p>
 
                 <div class="producto-estrellas">
                     <i class="bi bi-star-fill"></i>
                     <span>({{ prod.estrellas or 5.0 }})</span>
                 </div>
-                
+
                 <div class="producto-compra">
                     <span class="producto-precio">S/ {{ "%.2f"|format(prod.precio) }}</span>
                     <button class="btn-carrito">
