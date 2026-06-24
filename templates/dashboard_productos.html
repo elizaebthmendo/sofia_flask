@@ -9,95 +9,86 @@
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <h2>Sofía Piñatería</h2>
-                <span>Panel Admin</span>
-            </div>
-            <nav class="sidebar-menu">
-                <a href="{{ url_for('dashboard') }}"><i class="bi bi-speedometer2"></i> Inicio</a>
-                <a href="{{ url_for('dashboard_productos') }}" class="active"><i class="bi bi-box-seam"></i> Productos</a>
-                <a href="{{ url_for('logout') }}" class="logout-link"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
-            </nav>
-        </aside>
+    <h1>Sofía Piñatería</h1>
+    <p>Panel Admin</p>
 
-        <main class="main-content">
-            <header class="content-header">
-                <div class="header-title">
-                    <h1>Gestión de Productos</h1>
-                    <p>Agrega, edita o elimina los productos del catálogo público.</p>
+    <nav>
+        <a href="{{ url_for('dashboard') }}"><i class="bi bi-house-door-fill"></i> Inicio</a>
+        <a href="{{ url_for('dashboard_productos') }}"><i class="bi bi-box-seam-fill"></i> Productos</a>
+        <a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+    </nav>
+
+    <div class="banner-gestion">
+        <h2>Gestión de Productos</h2>
+        <p>Agrega, edita o elimina los productos del catálogo público.</p>
+        <button id="btnAbrirModal">
+            <i class="bi bi-plus-circle"></i> Nuevo Producto
+        </button>
+    </div>
+
+    <p>¡Bienvenida de vuelta, {{ session['admin_nombre'] }}!</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alerta alerta-{{ category }}">
+                    {{ message }}
                 </div>
-                <button class="btn-principal-dash" id="btnAbrirModal">
-                    <i class="bi bi-plus-circle"></i> Nuevo Producto
-                </button>
-            </header>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alerta alerta-{{ category }}">
-                            {{ message }}
-                        </div>
+    <h3>📋 Productos en Base de Datos</h3>
+    <div class="tabla-contenedor">
+        <table class="tabla-productos">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre del Producto</th>
+                    <th>Precio</th>
+                    <th>Estrellas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if productos %}
+                    {% for prod in productos %}
+                    <tr>
+                        <td>
+                            <img src="{{ prod.imagen_url }}" alt="{{ prod.nombre }}" class="tabla-img">
+                        </td>
+                        <td>
+                            <span class="producto-nombre-txt">{{ prod.nombre }}</span>
+                        </td>
+                        <td class="txt-precio">S/. {{ prod.precio }}</td>
+                        <td>
+                            <span style="color: #ffca28;"><i class="bi bi-star-fill"></i> {{ prod.estrellas or 5.0 }}</span>
+                        </td>
+                        <td>
+                            <div class="tabla-acciones-btns">
+                                <button class="btn-accion edit" title="Editar Producto" 
+                                        onclick="abrirModalEditar('{{ prod.id }}', '{{ prod.nombre|e }}', '{{ prod.precio }}', '{{ prod.estrellas }}', '{{ prod.imagen_url|e }}', '{{ prod.descripcion|e }}')">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                
+                                <form action="{{ url_for('eliminar_producto', id=prod.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                    <button type="submit" class="btn-accion delete" title="Eliminar Producto">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                     {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #a0a0a0;">
+                            No tienes productos guardados todavía.
+                        </td>
+                    </tr>
                 {% endif %}
-            {% endwith %}
-
-            <section style="margin-top: 30px;">
-                <h3 style="color: #3d3d3d; margin-bottom: 15px;">📋 Productos en Base de Datos</h3>
-                <div class="tabla-contenedor">
-                    <table class="tabla-productos">
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Nombre del Producto</th>
-                                <th>Precio</th>
-                                <th>Estrellas</th>
-                                <th style="text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% if productos %}
-                                {% for prod in productos %}
-                                <tr>
-                                    <td>
-                                        <img src="{{ prod.imagen_url }}" alt="{{ prod.nombre }}" class="tabla-img">
-                                    </td>
-                                    <td>
-                                        <span class="producto-nombre-txt">{{ prod.nombre }}</span>
-                                    </td>
-                                    <td class="txt-precio">S/. {{ prod.precio }}</td>
-                                    <td>
-                                        <span style="color: #ffca28;"><i class="bi bi-star-fill"></i> {{ prod.estrellas or 5.0 }}</span>
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <div class="tabla-acciones-btns">
-                                            <button class="btn-accion edit" title="Editar Producto" 
-                                                    onclick="abrirModalEditar('{{ prod.id }}', '{{ prod.nombre|e }}', '{{ prod.precio }}', '{{ prod.estrellas }}', '{{ prod.imagen_url|e }}', '{{ prod.descripcion|e }}')">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            
-                                            <form action="{{ url_for('eliminar_producto', id=prod.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
-                                                <button type="submit" class="btn-accion delete" title="Eliminar Producto">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            {% else %}
-                                <tr>
-                                    <td colspan="5" style="text-align: center; padding: 30px; color: #a0a0a0;">
-                                        No tienes productos guardados todavía.
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </main>
+            </tbody>
+        </table>
     </div>
 
     <div id="modalProducto" class="modal-overlay">
@@ -179,13 +170,12 @@
     </div>
 
     <script>
-        // 1. Declaración única de elementos (Sin duplicados)
         const modalAgregar = document.getElementById('modalProducto');
         const btnAbrirAgregar = document.getElementById('btnAbrirModal');
         const btnCerrarAgregar = document.getElementById('btnCerrarModal');
         const modalEditar = document.getElementById('modalEditarProducto');
 
-        // 2. Lógica para abrir/cerrar el Modal de Agregar Producto
+        // Lógica para abrir/cerrar modal de agregar
         if (btnAbrirAgregar && modalAgregar && btnCerrarAgregar) {
             btnAbrirAgregar.addEventListener('click', () => {
                 modalAgregar.classList.add('mostrar');
@@ -195,7 +185,7 @@
             });
         }
 
-        // 3. Lógica para abrir el Modal de Editar Producto (Pasa los datos dinámicamente)
+        // Lógica para abrir modal de editar con datos precargados
         function abrirModalEditar(id, nombre, precio, estrellas, url, descripcion) {
             const formEditar = document.getElementById('formEditar');
             if (formEditar) {
@@ -213,14 +203,13 @@
             }
         }
 
-        // Función para cerrar el Modal de Edición
         function cerrarModalEditar() {
             if (modalEditar) {
                 modalEditar.classList.remove('mostrar');
             }
         }
 
-        // 4. Cerrar cualquier modal si el usuario hace clic fuera de la caja blanca
+        // Cerrar al hacer clic fuera del modal
         window.addEventListener('click', (e) => {
             if (e.target === modalAgregar) {
                 modalAgregar.classList.remove('mostrar');
