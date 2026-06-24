@@ -238,18 +238,15 @@ def agregar_al_carrito(id):
         
     carrito = session['carrito']
     
-    # Obtenemos los datos enviados desde el catálogo de productos
     nombre = request.form.get('nombre')
     precio = float(request.form.get('precio'))
     imagen_url = request.form.get('imagen_url')
     
-    id_str = str(id)  # Forzar el ID a string evita conflictos de llaves en la sesión
+    id_str = str(id)
     
-    # Si el producto ya está en el carrito, sumamos 1
     if id_str in carrito:
         carrito[id_str]['cantidad'] += 1
     else:
-        # Si es nuevo, lo registramos
         carrito[id_str] = {
             'nombre': nombre,
             'precio': precio,
@@ -257,10 +254,8 @@ def agregar_al_carrito(id):
             'cantidad': 1
         }
         
-    session.modified = True  # Obligatorio para guardar cambios en Flask
+    session.modified = True
     flash('¡Producto añadido al carrito! 🛒', 'success')
-    
-    # CORRECCIÓN AQUÍ: Redirigir a la tienda pública, no al panel de administración
     return redirect(url_for('productos'))
 
 
@@ -293,6 +288,9 @@ def eliminar_del_carrito(id):
     return redirect(url_for('ver_carrito'))
 
 
+# ==========================================================================
+# GESTIÓN DE ELIMINACIÓN DEL CATÁLOGO (UNA SOLA VEZ)
+# ==========================================================================
 @app.route("/dashboard/productos/eliminar/<int:id>", methods=["POST"])
 def eliminar_producto(id):
     if "admin_id" not in session:
@@ -307,7 +305,7 @@ def eliminar_producto(id):
 
 
 # ==========================================
-# LEVANTAMIENTO DEL SERVIDOR (SIEMPRE AL FINAL)
+# ENCIENDES EL SERVIDOR (SIEMPRE AL FINAL)
 # ==========================================
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
