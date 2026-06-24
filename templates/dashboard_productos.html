@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
+
 <body>
 
     <div class="container" style="max-width: 1200px;">
         <div class="dashboard-contenedor">
-            
+
             <aside class="dashboard-sidebar">
-                <h3><a href="{{ url_for('dashboard') }}" style="color: inherit; text-decoration: none;">Panel Sofia</a></h3>
+                <h3><a href="{{ url_for('dashboard') }}" style="color: inherit; text-decoration: none;">Panel Sofia</a>
+                </h3>
                 <ul class="sidebar-enlaces">
                     <li><a href="{{ url_for('dashboard') }}">🏠 Inicio Panel</a></li>
                     <li class="active"><a href="{{ url_for('dashboard_productos') }}">📦 Gestionar Catálogo</a></li>
                     <li><a href="{{ url_for('inicio') }}">🌐 Ir a la Web Pública</a></li>
-                    <li style="margin-top: auto;"><a href="{{ url_for('logout') }}" class="logout-link">🚪 Cerrar Sesión</a></li>
+                    <li style="margin-top: auto;"><a href="{{ url_for('logout') }}" class="logout-link">🚪 Cerrar
+                            Sesión</a></li>
                 </ul>
             </aside>
 
@@ -26,7 +30,8 @@
                 <div class="dashboard-header-acciones">
                     <div>
                         <h2>Gestión del Catálogo de Productos</h2>
-                        <p style="color: #666; margin-bottom: 0;">Modifica los artículos del inventario de forma rápida.</p>
+                        <p style="color: #666; margin-bottom: 0;">Modifica los artículos del inventario de forma rápida.
+                        </p>
                     </div>
                     <button class="btn-nuevo-producto" id="btnAbrirModal">
                         <i class="bi bi-plus-circle"></i> Agregar Producto
@@ -48,44 +53,81 @@
                             </thead>
                             <tbody>
                                 {% if productos %}
-                                    {% for prod in productos %}
-                                    <tr>
-                                        <td>
-                                            <img src="{{ prod.imagen_url }}" alt="{{ prod.nombre }}" class="tabla-img">
-                                        </td>
-                                        <td>
-                                            <span class="producto-nombre-txt">{{ prod.nombre }}</span>
-                                        </td>
-                                        <td class="txt-precio">S/. {{ "%.2f"|format(prod.precio) }}</td>
-                                        <td>
-                                            <span style="color: #ffca28;"><i class="bi bi-star-fill"></i> {{ prod.estrellas or 5.0 }}</span>
-                                        </td>
-                                        <td style="text-align: center;">
-                                            <div class="tabla-acciones-btns">
-                                                <button class="btn-accion edit" title="Editar Producto" 
-                                                        onclick="abrirModalEditar('{{ prod.id }}', '{{ prod.nombre|e }}', '{{ prod.precio }}', '{{ prod.estrellas }}', '{{ prod.imagen_url|e }}', '{{ prod.descripcion|e }}')">
-                                                    <i class="bi bi-pencil-square"></i>
+                                {% for prod in productos %}
+                                <tr>
+                                    <td>
+                                        <img src="{{ prod.imagen_url }}" alt="{{ prod.nombre }}" class="tabla-img">
+                                    </td>
+                                    <td>
+                                        <span class="producto-nombre-txt">{{ prod.nombre }}</span>
+                                    </td>
+                                    <td class="txt-precio">S/. {{ prod.precio }}</td>
+                                    <td>
+                                        <span style="color: #ffca28;"><i class="bi bi-star-fill"></i> {{ prod.estrellas
+                                            or 5.0 }}</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <div class="tabla-acciones-btns">
+                                            <button class="btn-accion edit" title="Editar Producto"
+                                                onclick="abrirModalEditar('{{ prod.id }}', '{{ prod.nombre|e }}', '{{ prod.precio }}', '{{ prod.estrellas }}', '{{ prod.imagen_url|e }}', '{{ prod.descripcion|e }}')">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <form action="{{ url_for('eliminar_producto', id=prod.id) }}" method="POST"
+                                                style="display:inline;"
+                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                                <button type="submit" class="btn-accion delete"
+                                                    title="Eliminar Producto">
+                                                    <i class="bi bi-trash3-fill"></i>
                                                 </button>
-                                                <form action="{{ url_for('eliminar_producto', id=prod.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
-                                                    <button type="submit" class="btn-accion delete" title="Eliminar Producto">
-                                                        <i class="bi bi-trash3-fill"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
                                 {% else %}
-                                    <tr>
-                                        <td colspan="5" style="text-align: center; padding: 30px; color: #a0a0a0;">
-                                            No tienes productos guardados todavía.
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 30px; color: #a0a0a0;">
+                                        No tienes productos guardados todavía.
+                                    </td>
+                                </tr>
                                 {% endif %}
                             </tbody>
                         </table>
                     </div>
                 </section>
+
+                <script>
+                    const modal = document.getElementById('modalProducto');
+                    const btnAbrir = document.getElementById('btnAbrirModal');
+                    const btnCerrar = document.getElementById('btnCerrarModal');
+
+                    btnAbrir.addEventListener('click', () => modal.classList.add('mostrar'));
+                    btnCerrar.addEventListener('click', () => modal.classList.remove('mostrar'));
+
+                    window.addEventListener('click', (e) => {
+                        if (e.target === modal) modal.classList.remove('mostrar');
+                        if (e.target === document.getElementById('modalEditarProducto')) cerrarModalEditar();
+                    });
+
+                    function abrirModalEditar(id, nombre, precio, estrellas, url, descripcion) {
+                        const formEditar = document.getElementById('formEditar');
+                        // Ajustado para que use exactamente tu ruta de app.py
+                        formEditar.action = `/dashboard/productos/editar/${id}`;
+
+                        document.getElementById('edit_nombre').value = nombre;
+                        document.getElementById('edit_precio').value = precio;
+                        document.getElementById('edit_estrellas').value = estrellas || '5.0';
+                        document.getElementById('edit_imagen_url').value = url;
+                        document.getElementById('edit_descripcion').value = descripcion;
+
+                        document.getElementById('modalEditarProducto').classList.add('mostrar');
+                    }
+
+                    function cerrarModalEditar() {
+                        document.getElementById('modalEditarProducto').classList.remove('mostrar');
+                    }
+                </script>
             </main>
 
         </div>
@@ -98,32 +140,35 @@
                 <button class="modal-cerrar" id="btnCerrarModal">&times;</button>
             </div>
             <div class="modal-cuerpo">
-                <form action="{{ url_for('agregar_producto') }}" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+                <form action="{{ url_for('agregar_producto') }}" method="POST"
+                    style="display: flex; flex-direction: column; gap: 15px;">
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
                         <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Título del Producto</label>
-                           <input type="text" name="nombre" placeholder="Ej. Kit de Globos Arco" required>
+                            <label>Título del Producto</label>
+                            <input type="text" name="nombre" placeholder="Ej. Kit de Globos Arco" required>
                         </div>
                         <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Precio (S/.)</label>
-                           <input type="number" step="0.01" name="precio" placeholder="18.00" required>
+                            <label>Precio (S/.)</label>
+                            <input type="number" step="0.01" name="precio" placeholder="18.00" required>
                         </div>
                         <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Estrellas (0 al 5)</label>
-                           <input type="number" step="0.1" min="0" max="5" name="estrellas" placeholder="4.5" required>
+                            <label>Estrellas (0 al 5)</label>
+                            <input type="number" step="0.1" min="0" max="5" name="estrellas" placeholder="4.5" required>
                         </div>
                     </div>
 
                     <div class="grupo-input" style="margin-bottom: 0;">
                         <label>Ruta o URL de la Imagen</label>
-                        <input type="text" name="imagen_url" placeholder="/static/img/productos/producto03.jpeg" required>
+                        <input type="text" name="imagen_url" placeholder="/static/img/productos/producto03.jpeg"
+                            required>
                     </div>
 
                     <div class="grupo-input" style="margin-bottom: 0;">
                         <label>Descripción del Producto</label>
-                        <textarea name="descripcion" rows="3" placeholder="Escribe aquí los detalles del producto..." required style="resize: vertical;"></textarea>
+                        <textarea name="descripcion" rows="3" placeholder="Escribe aquí los detalles del producto..."
+                            required style="resize: vertical;"></textarea>
                     </div>
-                    
+
                     <button type="submit" class="btn-guardar-modal">Guardar Producto</button>
                 </form>
             </div>
@@ -140,16 +185,17 @@
                 <form id="formEditar" action="" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
                         <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Título del Producto</label>
-                           <input type="text" name="nombre" id="edit_nombre" required>
+                            <label>Título del Producto</label>
+                            <input type="text" name="nombre" id="edit_nombre" required>
                         </div>
                         <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Precio (S/.)</label>
-                           <input type="number" step="0.01" name="precio" id="edit_precio" required>
+                            <label>Precio (S/.)</label>
+                            <input type="number" step="0.01" name="precio" id="edit_precio" required>
                         </div>
                         <div class="grupo-input" style="margin-bottom: 0;">
-                           <label>Estrellas (0 al 5)</label>
-                           <input type="number" step="0.1" min="0" max="5" name="estrellas" id="edit_estrellas" required>
+                            <label>Estrellas (0 al 5)</label>
+                            <input type="number" step="0.1" min="0" max="5" name="estrellas" id="edit_estrellas"
+                                required>
                         </div>
                     </div>
 
@@ -160,10 +206,12 @@
 
                     <div class="grupo-input" style="margin-bottom: 0;">
                         <label>Descripción del Producto</label>
-                        <textarea name="descripcion" id="edit_descripcion" rows="3" required style="resize: vertical;"></textarea>
+                        <textarea name="descripcion" id="edit_descripcion" rows="3" required
+                            style="resize: vertical;"></textarea>
                     </div>
-                    
-                    <button type="submit" class="btn-guardar-modal" style="background-color: #e999eb;">Actualizar Cambios</button>
+
+                    <button type="submit" class="btn-guardar-modal" style="background-color: #e999eb;">Actualizar
+                        Cambios</button>
                 </form>
             </div>
         </div>
@@ -187,8 +235,8 @@
         function abrirModalEditar(id, nombre, precio, estrellas, url, descripcion) {
             const formEditar = document.getElementById('formEditar');
             // Reemplaza de forma dinámica la URL del backend usando la estructura de Flask
-            formEditar.action = `/editar_producto/${id}`; 
-            
+            formEditar.action = `/editar_producto/${id}`;
+
             document.getElementById('edit_nombre').value = nombre;
             document.getElementById('edit_precio').value = precio;
             document.getElementById('edit_estrellas').value = estrellas || '5.0';
@@ -203,4 +251,5 @@
         }
     </script>
 </body>
+
 </html>

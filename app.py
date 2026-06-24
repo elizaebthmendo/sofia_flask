@@ -188,3 +188,15 @@ def editar_producto(id):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
+@app.route("/dashboard/productos/eliminar/<int:id>", methods=["POST"])
+def eliminar_producto(id):
+    if "admin_id" not in session:
+        return redirect(url_for("login"))
+        
+    producto = Producto.query.get_or_404(id)
+    db.session.delete(producto)
+    db.session.commit()
+    
+    flash("Producto eliminado correctamente del catálogo.", "danger")
+    return redirect(url_for("dashboard_productos"))
