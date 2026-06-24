@@ -917,3 +917,218 @@ footer {
     color: #99558B;
     text-decoration: underline;
 }
+/* ==========================================================================
+   ESTILOS ADICIONALES PARA DASHBOARD: TABLAS Y MODALES
+   ========================================================================== */
+
+/* Alineación superior del título y botón de agregar */
+.dashboard-header-acciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #fff0f5;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+/* Botón Agregar Producto */
+.btn-nuevo-producto {
+    background-color: #99558B;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(153, 85, 139, 0.2);
+}
+
+.btn-nuevo-producto:hover {
+    background-color: #c254d8;
+    transform: translateY(-2px);
+}
+
+/* Tabla de Productos */
+.tabla-contenedor {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #ffdeeb;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.tabla-productos {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.tabla-productos th {
+    background-color: #fffbfd;
+    color: #4a4a4a;
+    font-weight: bold;
+    padding: 15px 20px;
+    border-bottom: 2px solid #ffdeeb;
+}
+
+.tabla-productos td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #fff0f5;
+    vertical-align: middle;
+}
+
+.tabla-productos tbody tr:hover {
+    background-color: #fffbfd;
+}
+
+/* Imagen en miniatura dentro de la tabla */
+.tabla-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ffdeeb;
+}
+
+.producto-nombre-txt {
+    font-weight: 600;
+    color: #333;
+}
+
+.txt-precio {
+    font-weight: bold;
+    color: #c254d8;
+}
+
+/* Botones de acción en la tabla (iconos) */
+.tabla-acciones-btns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-accion {
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-accion.edit {
+    background-color: #fff0f5;
+    color: #c254d8;
+}
+
+.btn-accion.edit:hover {
+    background-color: #e999eb;
+    color: white;
+}
+
+.btn-accion.delete {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.btn-accion.delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Estructura Base de Ventanas Modales */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.mostrar {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-wrapper {
+    background: white;
+    width: 100%;
+    max-width: 650px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-top: 6px solid #99558B;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.mostrar .modal-wrapper {
+    transform: translateY(0);
+}
+
+.modal-cabecera {
+    padding: 20px 25px;
+    border-bottom: 1px solid #fff0f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-cabecera h3 {
+    margin: 0;
+    color: #4a4a4a;
+}
+
+.modal-cerrar {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #a0a0a0;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-cerrar:hover {
+    color: #dc3545;
+}
+
+.modal-cuerpo {
+    padding: 25px;
+}
+
+.btn-guardar-modal {
+    padding: 12px;
+    border: none;
+    background: #99558B;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    align-self: flex-end;
+    width: 160px;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(153, 85, 139, 0.2);
+    transition: background 0.2s;
+}
+
+.btn-guardar-modal:hover {
+    background: #c254d8;
+}
