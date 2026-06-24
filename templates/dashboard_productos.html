@@ -9,27 +9,26 @@
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <aside class="sidebar">
+    <div class="panel-container">
+        
+        <aside class="sidebar-left">
             <div class="sidebar-logo">
-                <h2>Sofía Piñatería</h2>
-                <span>Panel Admin</span>
+                <h2>Panel Sofía</h2>
             </div>
             <nav class="sidebar-menu">
-                <a href="{{ url_for('dashboard') }}"><i class="bi bi-house-door-fill"></i> Inicio</a>
-                <a href="{{ url_for('dashboard_productos') }}" class="active"><i class="bi bi-box-seam-fill"></i> Productos</a>
-                <a href="{{ url_for('logout') }}" class="logout-link"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+                <a href="{{ url_for('dashboard') }}"><i class="bi bi-house-door"></i> Inicio Panel</a>
+                <a href="{{ url_for('dashboard_productos') }}" class="active"><i class="bi bi-box-seam"></i> Gestionar Catálogo</a>
+                <a href="/"><i class="bi bi-globe"></i> Ir a la Web Pública</a>
+                <a href="{{ url_for('logout') }}" class="logout-link" style="color: #dc3545;"><i class="bi bi-door-open"></i> Cerrar Sesión</a>
             </nav>
         </aside>
 
-        <main class="main-content">
+        <main class="main-panel">
             
-            <p style="margin-bottom: 15px; color: #555;">¡Bienvenida de vuelta, {{ session['admin_nombre'] }}!</p>
-
-            <div class="dashboard-header-acciones">
+            <div class="hero-section">
                 <div class="hero-textos">
-                    <h2 style="margin: 0; color: #99558B;">Gestión de Productos</h2>
-                    <p style="margin: 5px 0 0 0; color: #666;">Agrega, edita o elimina los productos del catálogo público.</p>
+                    <h2>Gestión de Productos</h2>
+                    <p>Agrega, edita o elimina los productos del catálogo público.</p>
                 </div>
                 <button class="btn-nuevo-producto" id="btnAbrirModal">
                     <i class="bi bi-plus-circle"></i> Nuevo Producto
@@ -39,14 +38,15 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="alerta alerta-{{ category }}" style="margin-bottom: 20px;">
+                        <div class="alerta alerta-{{ category }}" style="margin-bottom: 20px; padding: 10px; border-radius: 6px;">
                             {{ message }}
                         </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
 
-            <h3 style="color: #4a4a4a; margin-top: 25px; margin-bottom: 15px;">📋 Productos en Base de Datos</h3>
+            <h3 style="color: #4a4a4a; margin-top: 25px; margin-bottom: 15px; font-weight: bold;">📋 Productos en Base de Datos</h3>
+            
             <div class="tabla-contenedor">
                 <table class="tabla-productos">
                     <thead>
@@ -190,6 +190,7 @@
                 modalAgregar.classList.add('mostrar');
             });
             btnCerrarAgregar.addEventListener('click', () => {
+                modalAgregar.classList.remove('remove');
                 modalAgregar.classList.remove('mostrar');
             });
         }
